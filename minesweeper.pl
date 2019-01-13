@@ -109,3 +109,18 @@ check(A,B) \ check(A,B) <=> true. %Remove duplicados de check(A,B) / Remove Dupl
      or greater than the lower and upper limits of the array, respectively.
 */
 minesweeper(Xmax,Ymax) \ check(X,Y) <=> X < 1; Y < 1; X > Xmax; Y > Ymax | true.
+
+/*
+    PT-BR: Quarto passo (Verificacao: Mina encontrada)
+
+    Na expressao "check(X,Y), mine(X,Y) <=> write('Voce perdeu! Isso era uma bomba!'),
+    eh verificado um campo com bomba que retorna a mensagem "Voce perdeu! Isso era uma bomba!"
+    e acaba a execucao. (halt == break)
+
+    EN: Fourth step (Check: Mine found)
+
+    In the expression "check(X,Y), mine(X,Y) <=> write('Voce perdeu! Isso era uma bomba!')
+    is checked a bomb field that returns the message "Voce perdeu! Isso era uma bomba!"
+    and the execution is finished. (halt == break)
+*/
+check(X,Y), mine(X,Y) <=> write('Voce perdeu! Isso era uma bomba!'), halt. %EN: 'You lose! That was a mine!'
