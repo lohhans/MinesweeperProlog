@@ -123,4 +123,44 @@ minesweeper(Xmax,Ymax) \ check(X,Y) <=> X < 1; Y < 1; X > Xmax; Y > Ymax | true.
     is checked a bomb field that returns the message "Voce perdeu! Isso era uma bomba!"
     and the execution is finished. (halt == break)
 */
-check(X,Y), mine(X,Y) <=> write('Voce perdeu! Isso era uma bomba!'), halt. %EN: 'You lose! That was a mine!'
+check(X,Y), mine(X,Y) <=> write('Voce perdeu! Isso era uma bomba!'), nl, halt. %EN: 'You lose! That was a mine!'
+
+/*
+    PT-BR: Quinto passo (Verificacao: Contar minas vizinhas)
+
+    Em "check(X,Y), mine(Xmine,Ymine)" sera checado a casa (X,Y) da matriz do campo minado, como tambem,
+    sera comparado a uma coordenada (Xmine,Ymine) de uma bomba vizinha, que esteja ao redor desta casa (X,Y);
+
+    Ou seja, nas duas expressoes, listadas abaixo, sao analisados os vizinhos da casa (X,Y) checada,
+    ao verificar que ha bomba ele incrementa o 'contador de bombas vizinhas' com "field(X,Y,1)";
+
+    Apos todas as checagens, em "field(X,Y,N1), field(X,Y,N2) <=> N is N1+N2 | field(X,Y,N)." eh substituido
+    o valor de N da casa (X,Y) checada pela soma de todas as bombas encontradas.
+
+    Obs: A soma eh feita a cada duas bombas encontradas, ou seja, se por exemplo houverem tres bombas ao redor, "A", "B" e "C",
+    sera somada "A" + "B", 1 + 1, atualizando o valor de N da casa (X,Y) para 2, em seguida o codigo volta a somar
+    o restante das bombas que faltam, neste caso somente mais uma, "C", entao sera somado o valor de N + 1,
+    e entao sera atualizado novamente o valor de N para 3, que eh a quantidade de bombas ao redor desta casa (X,Y).
+
+    EN: Fifth step (Check: Count neighboring mines)
+
+    In "check(X,Y), mine(Xmine,Ymine)" the house (X,Y) from the array of the minesweeper will be checked, as also,
+    will be compared to a coordinate (Xmine,Ymine) of a neighboring bomb that is around this house (X,Y);
+
+    That is, in the two expressions, listed below, the neighbors of the house (X,Y) checked,
+    when checking that there is a bomb it increases the 'neighboring bomb counter' with "field(X,Y,1)";
+
+    After all the checks, in "field(X,Y,N1), field(X,Y,N2) <=> N is N1 + N2 | field(X,Y,N)." is replaced
+    the value of N of the house (X,Y) checked by the sum of all the pumps found.
+
+    Note: The sum is done every two bombs found, ie if there are three bombs around, "A", "B" and "C", for example,
+    will be added "A" + "B", 1 + 1, updating the value of N of the house (X,Y) to 2, then the code returns to add
+    the remainder of the missing bombs, in this case only one more, "C", then the value of N + 1 will be added,
+    so the value of N will be 3, which is the number of pumps around this house (X,Y).
+*/
+check(X,Y), mine(Xmine,Ymine) ==>
+  Xmine =< X+1, Xmine >= X-1,
+  Ymine =< Y+1, Ymine >= Y-1 |
+  field(X,Y,1).
+
+field(X,Y,N1), field(X,Y,N2) <=> N is N1+N2 | field(X,Y,N).
