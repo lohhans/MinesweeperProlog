@@ -164,3 +164,20 @@ check(X,Y), mine(Xmine,Ymine) ==>
   field(X,Y,1).
 
 field(X,Y,N1), field(X,Y,N2) <=> N is N1+N2 | field(X,Y,N).
+
+/*
+    PT-BR: Sexto passo (Verificacao: Adicionar padrao em "field/3")
+
+    Na expressao, listada abaixo, todos os campos os quais nao ha bombas como vizinhos,
+    recebem o valor de zero minas na vizinhanca do referido campo.
+
+    Obs: Quando eh descoberto que nao ha bombas, eh mostrado um campo vazio " ".
+
+    EN: Sixth step (Check: Add default field/3)
+
+    In the expression, listed below, all fields which have no bombs as neighbors,
+    receive the value of zero mines in the vicinity of said field.
+
+    Note: When it is discovered that there are no bombs, an empty field  " " is shown.
+*/
+check(X,Y) ==> field(X,Y,0).
