@@ -201,4 +201,4 @@ check(X,Y), field(X,Y,0) ==> Xm is X-1, Xp is X+1, Ym is Y-1, Yp is Y+1,
   check(Xm,Ym), check(Xm,Yp),
   check(Xp,Ym), check(Xp,Yp).
 
-:- include('Play.pl').
+:- include('play.pl').
