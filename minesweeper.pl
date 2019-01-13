@@ -181,3 +181,24 @@ field(X,Y,N1), field(X,Y,N2) <=> N is N1+N2 | field(X,Y,N).
     Note: When it is discovered that there are no bombs, an empty field  " " is shown.
 */
 check(X,Y) ==> field(X,Y,0).
+
+/*
+    PT-BR: Setimo passo (Verificar todos os vizinhos do field(X,Y,0))
+
+    Na expressao, listada abaixo, todos os campos vizinhos da casa (X,Y) da matriz do campo minado,
+    sao verificados e atribuidos os devidos valores em relacao as bombas que a circunda, cada checagem eh
+    realizada a partir da logica da checagem individual, descrita acima.
+
+    EN: Seventh step (Check all neighbors of field(X,Y,0))
+
+    In the expression, listed below, all the neighboring fields of the house (X,Y) of the array of the minesweeper,
+    are checked and given the appropriate values ​​in relation to the bombs surrounding it,
+    each check is performed from the logic of the individual check described above.
+*/
+check(X,Y), field(X,Y,0) ==> Xm is X-1, Xp is X+1, Ym is Y-1, Yp is Y+1,
+  check(X,Ym), check(X,Yp),
+  check(Xm,Y), check(Xp,Y),
+  check(Xm,Ym), check(Xm,Yp),
+  check(Xp,Ym), check(Xp,Yp).
+
+:- include('Play.pl').
