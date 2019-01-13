@@ -40,3 +40,31 @@
     where X (line) and Y (column) is one house of the matrix of the minesweeper and N is the number of bombs around it
 */
 :- chr_constraint mines/1, mine/2, minesweeper/2, check/2, field/3.
+
+/*
+    Primeiro Passo - First Step:
+
+    PT-BR: A sentenca de parada sera "mines(0) <=> true.", ou seja,
+    que o metodo minesweeper vai parar de executar e a execucao do codigo prosseguira;
+
+    Em minesweeper, recebe-se o X e o Y e a quantidade de bombas em N, em seguida,
+    sera distribuida as bombas aleatoriamente no campo minado;
+
+    Na condicao "mine(Xm,Ym), [..]" havera uma verificacao que sera explicada abaixo,
+    e em "[..], mines(NN)." a execucao volta para a verificacao inicial do metodo, ate que
+    chegue na condicao de parada, que eh nao ter mais bombas a distribuir ("mines(0) <=> true.")!
+
+    EN: The stop statement will be "mines(0) <=> true.", that is,
+    that the minesweeper method will stop executing and the code execution will continue;
+
+    In minesweeper, the X and Y are received and the number of bombs there be setted in N,
+    the bombs will be distributed randomly in the minefield;
+
+    In the condition "mine (Xm, Ym), [..]" there will be a check which will be explained below,
+    and in "[..], mines (NN)." execution returns to the initial verification of the method, until
+    arrives in the stop condition, which is to have no more bombs to distribute ("mines (0) <=> true.")!
+*/
+mines(0) <=> true.
+minesweeper(X,Y) \ mines(N) <=> NN is N-1,
+  random_between(1,X,Xm), random_between(1,Y,Ym),
+  mine(Xm,Ym), mines(NN).
