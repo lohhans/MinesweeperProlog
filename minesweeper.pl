@@ -31,13 +31,13 @@
     PT-BR: Em check/2 sera usada essa declaracao: check(A,B)
     passando A (linha) e B (coluna) e vericando aquela casa da matriz do campo minado.
     EN: At check/2 this statement will be used: check(A, B)
-    putting A (line) and B (column) and verifying that house of the matrix of the minesweeper.
+    putting A (line) and B (column) and verifying that house of the array of the minesweeper.
 
     6 - field/3
     PT-BR: Em field/3 sera usada essa declaracao: field(X,Y,N)
     onde X (linha) e Y (coluna) eh uma casa da matriz do campo minado e N eh o numero de bombas ao redor dela
     EN: In field/3 this statement will be used: field(X,Y,N)
-    where X (line) and Y (column) is one house of the matrix of the minesweeper and N is the number of bombs around it
+    where X (line) and Y (column) is one house of the array of the minesweeper and N is the number of bombs around it
 */
 :- chr_constraint mines/1, mine/2, minesweeper/2, check/2, field/3.
 
@@ -88,3 +88,24 @@ minesweeper(X,Y) \ mines(N) <=> NN is N-1,
 */
 mine(X,Y) \ mine(X,Y) <=> mines(1). %Substituir duplicados /Replace Duplicates
 check(A,B) \ check(A,B) <=> true. %Remove duplicados de check(A,B) / Remove Duplicates of check(A,B)
+
+/*
+    PT-BR: Terceiro passo (Remover checador "check/2" além dos limites de "minesweeper/2") :
+
+    Em "minesweeper(Xmax,Ymax)" eh recebido o X e o Y maximo da matriz;
+
+    Em "check(X,Y)" sera checado a casa (X,Y) da matriz do campo minado, e verificado se
+    e somente se, as seguintes condicoes NAO forem satisfeitas, que estao definidas em
+    "X < 1; Y < 1; X > Xmax; Y > Ymax", que nada mais eh que: X e Y nao podem ser menores
+    ou maiores que o limite inferior e o superior da matriz, respectivamente.
+
+    EN: Third step (Remove "check/2" beyond the "minesweeper/2" boundaries):
+
+    In "minesweeper (Xmax,Ymax)" there is received the maximum X and Y of the array;
+
+    In "check (X,Y)" will be checked the house (X,Y) of the array of the minesweeper, and checked if
+    and only if, the following conditions are NOT met, which are defined in
+    "X < 1; Y < 1; X > Xmax; Y > Ymax", which is nothing more than: X and Y can they can not be smaller
+     or greater than the lower and upper limits of the array, respectively.
+*/
+minesweeper(Xmax,Ymax) \ check(X,Y) <=> X < 1; Y < 1; X > Xmax; Y > Ymax | true.
