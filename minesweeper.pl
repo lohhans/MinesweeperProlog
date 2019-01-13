@@ -66,5 +66,25 @@
 */
 mines(0) <=> true.
 minesweeper(X,Y) \ mines(N) <=> NN is N-1,
-  random_between(1,X,Xm), random_between(1,Y,Ym),
-  mine(Xm,Ym), mines(NN).
+    random_between(1,X,Xm), random_between(1,Y,Ym),
+    mine(Xm,Ym), mines(NN).
+
+/*
+    PT-BR: Segundo passo (Substituir duplicados) :
+
+    A expressao "mine(X,Y) \ mine(X,Y) <=> mines(1)." diz que ainda ha mais uma
+    bomba a ser alocada no campo minado, o que induz a realocacao da bomba duplicada;
+
+    Em seguida, a expressao "check(A,B) \ check(A,B) <=> true." coloca o valor "true"
+    na checagem, removendo a bomba duplicada do campo minado.
+
+    EN: Second step (Replace duplicates):
+
+    The expression "mine(X,Y) \ mine(X,Y) <=> mines(1)." says there is still one more
+    bomb to be allocated in the minesweeper, which induces the reallocation of the duplicate bomb;
+
+    Then the expression "check(A,B) \ check(A,B) <=> true." sets the value "true"
+    in checking, removing the duplicate bomb from the minefield.
+*/
+mine(X,Y) \ mine(X,Y) <=> mines(1). %Substituir duplicados /Replace Duplicates
+check(A,B) \ check(A,B) <=> true. %Remove duplicados de check(A,B) / Remove Duplicates of check(A,B)
