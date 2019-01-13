@@ -119,11 +119,11 @@ minesweeper(Xmax,Ymax) \ check(X,Y) <=> X < 1; Y < 1; X > Xmax; Y > Ymax | true.
 
     EN: Fourth step (Check: Mine found)
 
-    In the expression "check(X,Y), mine(X,Y) <=> write('Voce perdeu! Isso era uma bomba!')
-    is checked a bomb field that returns the message "Voce perdeu! Isso era uma bomba!"
+    In the expression "check(X,Y), mine(X,Y) <=> write('Voce perdeu! Ai tinha uma bomba!')
+    is checked a bomb field that returns the message "You lose! That was a mine!"
     and the execution is finished. (halt == break)
 */
-check(X,Y), mine(X,Y) <=> write('Voce perdeu! Isso era uma bomba!'), nl, halt. %EN: 'You lose! That was a mine!'
+check(X,Y), mine(X,Y) <=> write('Voce perdeu! Ai tinha uma bomba!'), nl, halt. %EN: 'You lose! That was a mine!'
 
 /*
     PT-BR: Quinto passo (Verificacao: Contar minas vizinhas)
