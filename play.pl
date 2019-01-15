@@ -159,7 +159,7 @@ print_store :- chr_show_store(minesweeper).
 prompt :-
     used_time(Seconds),
     write('[Tempo atual: '), write(Seconds), write(' segundos]'), nl,
-    % print_field, nl,
+    print_field, nl,
     write('[Escolher localizacao]'), nl,
     write('  Linha:    '), read(X),
     write('  Coluna:   '), read(Y), nl,
