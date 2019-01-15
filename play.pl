@@ -55,19 +55,19 @@ main :-
     write('Digite 0 para jogar o campo minado'), nl,
     write('Digite 1 para que a maquina jogue o campo minado:  '), read(Escolha_bot),
 
-    Escolha_bot = 1 -> start_prompt_bot;
+    (Escolha_bot = 1 -> start_prompt_bot;
 
     nl,
 
-    prompt.
+    prompt).
 
 /*
     PT-BR: Alocar manualmente as 10 bombas;
 
     EN: Manually allocate 10 bombs;
     Note: Strings translated below
-    Line 62: "nl, write('[The bombs must be arranged in coordinates (1,1) =< (X,Y) =< (10,10)]'), nl,";
-    Lines 69 to 88: Coordinates XN and YN;
+    Line: "nl, write('[The bombs must be arranged in coordinates (1,1) =< (X,Y) =< (10,10)]'), nl,";
+    Lines: Coordinates XN and YN;
 */
 input_bombs :-
     nl, write('[As bombas devem estar dispostas em coordenadas (1,1) =< (X,Y) =< (10,10)]'), nl,
@@ -97,19 +97,26 @@ input_bombs :-
     minesweeper(10,10), mine(X1,Y1), mine(X2,Y2), mine(X3,Y3), mine(X4,Y4),
     mine(X5,Y5), mine(X6,Y6), mine(X7,Y7), mine(X8,Y8), mine(X9,Y9), mine(X10,Y10),
 
+    info(10,10,10),
+
+    write('Digite 0 para jogar o campo minado'), nl,
+    write('Digite 1 para que a maquina jogue o campo minado:  '), read(Escolha_bot),
+
     get_time(StartTime),
     asserta(start_time(StartTime)),
 
-    info(10,10,10),
+    (Escolha_bot = 1 -> start_prompt_bot;
 
-    prompt.
+    nl,
+
+    prompt).
 
 /*
     PT-BR: Visualizar onde estao as bombas;
 
     EN: See where the bombs are;
     Note: Strings translated below
-    Line 114: "l, write('[Where the bombs are]'), nl,";
+    Line: "l, write('[Where the bombs are]'), nl,";
 */
 see_random_bombs :-
 
@@ -121,10 +128,17 @@ see_random_bombs :-
     nl, write('[Onde as bombas estao]'), nl,
     print_store, nl,
 
+    write('Digite 0 para jogar o campo minado'), nl,
+    write('Digite 1 para que a maquina jogue o campo minado:  '), read(Escolha_bot),
+
     get_time(StartTime),
     asserta(start_time(StartTime)),
 
-    prompt.
+    (Escolha_bot = 1 -> start_prompt_bot;
+
+    nl,
+
+    prompt).
 
 /*
     PT-BR: Usado para debugar e ver onde as bombas estão;
@@ -137,10 +151,10 @@ print_store :- chr_show_store(minesweeper).
 
     EN: Shown on screen whenever the player selects a field;
     Note: Strings translated below
-    Line 140: "write('[Current Field - '), write(Seconds), write(' Seconds]'), nl,";
-    Line 142: "write('[Check Location]'), nl,";
-    Line 143: "write('  Row:      '), read(X),";
-    Line 144: "write('  Column:   '), read(Y), nl,";
+    Line: "write('[Current Field - '), write(Seconds), write(' Seconds]'), nl,";
+    Line: "write('[Check Location]'), nl,";
+    Line: "write('  Row:      '), read(X),";
+    Line: "write('  Column:   '), read(Y), nl,";
 */
 prompt :-
     used_time(Seconds),
@@ -190,10 +204,10 @@ used_time(Seconds) :-
 
     EN: Used to receive minesweeper information (number of rows, columns and mines);
     Note: Strings translated below
-    Line 168: "nl, write('[Initialization]'), nl,";
-    Line 169: "write('  Number of Rows:    '), read(X),";
-    Line 170: "write('  Number of Columns: '), read(Y),";
-    Line 171: "write('  Number of Mines:   '), read(Mines).";
+    Line: "nl, write('[Initialization]'), nl,";
+    Line: "write('  Number of Rows:    '), read(X),";
+    Line: "write('  Number of Columns: '), read(Y),";
+    Line: "write('  Number of Mines:   '), read(Mines).";
 */
 request_info(X,Y,Mines) :-
     nl, write('[Inicializacao]'), nl,
@@ -221,11 +235,11 @@ print_field :-
 
     EN: Shows when wins, and stop the execution of the game;
     Note: Strings translated below
-    Line 197: "write('Congratulations! You won in '), write(Seconds), write(' seconds!'),";
+    Line: "write('Congratulations! You won in '), write(Seconds), write(' seconds!'),";
 */
 solved :-
     used_time(Seconds),
-    write('Parabens! Voce ganhou em '), write(Seconds), write(' segundos!'),
+    write('Parabens! Voce ganhou em '), write(Seconds), write(' segundos!'), nl,
     halt.
 
 %########################################################################################################################################
