@@ -228,23 +228,38 @@ solved :-
     write('Parabens! Voce ganhou em '), write(Seconds), write(' segundos!'),
     halt.
 
-% Comentar
+%########################################################################################################################################
+/*
+    PT-BR: Início do template de print do campo minado no terminal
+    EN: Beginning of the minesweeper template for print in the terminal
+*/
+
+/*
+    PT-BR: Metodo para printar os numeros de linhas e colunas do campo minado
+    EN: Method for printing the line and column numbers in the minesweeper
+*/
 repeat(_Char,0).
 repeat(Char,N) :-
     N > 0, Nm is N-1,
     write(Char),
     repeat(Char,Nm).
 
-% Comentar
+/*
+    PT-BR: Metodo para printar os numeros de linhas e colunas do campo minado
+    EN: Method for printing the line and column numbers in the minesweeper
+*/
 write_width(Value,Width) :-
     atom_length(Value,ValueWidth),
     Spaces is Width-ValueWidth,
     repeat(' ',Spaces),
     write(Value).
 
-% Comentar
+/*
+    PT-BR: Metodo para printar o campo minado
+    EN: Method for printing the minesweeper
+*/
 print_field(Field) :-
-    % get dimensions
+    % PT-BR: Obter dimensões / EN: Get dimensions
     length(Field,DimRows),
     Field = [Row|_Rows],
     length(Row,DimCols),
@@ -256,7 +271,10 @@ print_field(Field) :-
     print_seperator(1,DimRows,DimCols,RowWidth,ColWidth),
     print_header(1,DimRows,DimCols,RowWidth,ColWidth).
 
-% Comentar
+/*
+    PT-BR: Metodo para printar os limitadores
+    EN: Method for printing the limiters
+*/
 print_header(1,DimRows,DimCols,RowWidth,ColWidth) :-
     write(' '),
     repeat(' ',RowWidth), write(' | '),
@@ -272,7 +290,10 @@ print_header(DimCols,_DimRows,DimCols,RowWidth,ColWidth) :-
     repeat(' ',RowWidth),
     write(' '), nl.
 
-% Logica para printar um separador nas extremidades do campo minado
+/*
+    PT-BR: Metodo para printar um separador nas extremidades do campo minado
+    EN: Method for printing a separator at the ends of the minesweeper
+*/
 print_seperator(1,DimRows,DimCols,RowWidth,ColWidth) :-
     write('-'),
     repeat('-',RowWidth),
@@ -290,7 +311,10 @@ print_seperator(DimCols,_DimRows,DimCols,RowWidth,ColWidth) :-
     repeat('-',RowWidth),
     write('-'), nl.
 
-% Comentar
+/*
+    PT-BR: Metodo para printar uma coluna separadora nas extremidades do campo minado
+    EN: Method for printing a separator column at the ends of the minesweeper
+*/
 print_field([],_CurrRow,_DimRows,_DimCols,_RowWidth,_ColWidth).
 print_field([Row|Rows],CurrRow,DimRows,DimCols,RowWidth,ColWidth) :-
     write(' '),
@@ -301,15 +325,36 @@ print_field([Row|Rows],CurrRow,DimRows,DimCols,RowWidth,ColWidth) :-
     CurrRowN is CurrRow+1,
     print_field(Rows,CurrRowN,DimRows,DimCols,RowWidth,ColWidth).
 
-% Comentar
+/*
+    PT-BR: Metodo para adicionar o espaço vazio do campo minado
+    EN: Method to add empty space in the minesweeper
+*/
 print_row([],_DimCols,_ColWidth).
 print_row([Col|Cols],DimCols,ColWidth) :-
     write_width(Col,ColWidth), write(' '),
     print_row(Cols,DimCols,ColWidth).
 
-% Iniciando o campo minado com os valores recebidos
+/*
+    PT-BR: Fim do template de print do campo minado no terminal
+    EN: End of the minesweeper template for print in the terminal
+*/
+%########################################################################################################################################
+
+/*
+    1 - chr_constraint
+    PT-BR: Definindo a restricao de parâmetros para os metodos
+    EN: Defining the parameter constraint for the methods
+
+    2 - get_field/2
+    PT-BR: Em get_field/2 sera usada essa declaracao: get_field()
+    EN: In get_field/2 this statement will be used: get_field()
+*/
 :- chr_constraint get_field/2, get_field/4.
+
+% Iniciando o campo minado com os valores recebidos
+
 get_field(Field,OpenFields), minesweeper(X,Y) ==> var(Field), var(OpenFields) | get_field(X,Y,[[]],0).
+
 get_field(Field,OpenFieldsV), get_field(1,0,Mines,OpenFields) <=> var(Field), var(OpenFieldsV) | Field = Mines, OpenFieldsV = OpenFields.
 
 minesweeper(_,Y) \ get_field(X,0,Field,OpenFields) <=> X > 1 | Xm is X-1, get_field(Xm,Y,[[]|Field],OpenFields).
@@ -319,12 +364,25 @@ field(X,Y,Mines) \ get_field(X,Y,[Row|Rows],OpenFields) <=> Y > 0, X > 0 |
         Mines = 0,
         MinesToShow = ' '
     ;
+        % PT-BR: Para debug das bombas mostradas / EN: To debug the bombs shown
+        % field(X,Y,Mines), write(Mines),
         Mines =\= 0,
         MinesToShow = Mines
     ),
     Ym is Y-1, get_field(X,Ym,[[MinesToShow|Row]|Rows],OpenFields).
 get_field(X,Y,[Row|Rows],OpenFields) <=> Y > 0 | Ym is Y-1, OpenFieldsP is OpenFields+1, get_field(X,Ym,[['.'|Row]|Rows],OpenFieldsP).
 
-% Comentar
+/*
+    1 - chr_constraint
+    PT-BR: Definindo a restricao de parâmetros para os metodos
+    EN: Defining the parameter constraint for the methods
+
+    2 - get_info/
+    PT-BR: Em get_info/3 sera usada essa declaracao: get_info(X,Y,Mines)
+    copiando os dados recebidos de info(X,Y,Mines)
+    EN: In get_info/3 this statement will be used: get_info(X,Y,Mines)
+    copying the received data info(X, Y, Mines)
+*/
 :- chr_constraint get_info/3.
+
 info(X,Y,Mines) \ get_info(Xg,Yg,Minesg) <=> Xg = X, Yg = Y, Minesg = Mines.
