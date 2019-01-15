@@ -159,36 +159,32 @@ print_store :- chr_show_store(minesweeper).
 prompt :-
     used_time(Seconds),
     write('[Tempo atual: '), write(Seconds), write(' segundos]'), nl,
-    print_field, nl,
+    % print_field, nl,
     write('[Escolher localizacao]'), nl,
     write('  Linha:    '), read(X),
     write('  Coluna:   '), read(Y), nl,
     check(X,Y),
     prompt.
 
+    /*
+        PT-BR: Usado para fazer jogadas automáticas,
+        mostrado em tela sempre que o computador selecionar um campo;
+
+        EN: Used to make automatic moves,
+        displayed whenever the computer selects a field;
+    */
 start_prompt_bot :-
 
-    print_field, nl,
-    random_between(1,4,X), random_between(1,4,Y),
-    nl, write("("), write(X), write(","), write(Y), write(")"), nl,
+    % PT-BR: Pegando os dados do campo minado / EN: Picking up minesweeper's data
+    get_info(Xcm,Ycm,_Minescm),
+
+    % PT-BR: Escolhendo uma casa (X,Y) aleatoria dentro do limite do jogo / EN: Choosing a house (X,Y) randomly within the game boundary
+    random_between(1,Xcm,X), random_between(1,Ycm,Y),
+    nl, write('Jogada: '), write("("), write(X), write(","), write(Y), write(")"), nl,
     check(X,Y),
     print_field, nl,
 
-    random_between(7,10,X1), random_between(7,10,Y1),
-    nl, write("("), write(X1), write(","), write(Y1), write(")"), nl,
-    check(X1,Y1),
-    print_field, halt.
-
-    %prompt_bot.
-
-% prompt_bot :-
-%     print_field, nl,
-%     %manda(X,Y) para checar
-%
-%     print_field, nl,
-%     prompt_bot.
-
-
+    start_prompt_bot.
 
 /*
     PT-BR: Temporizador - Usado para mostrar o tempo que o jogador levou pra chegar a uma solucao final;

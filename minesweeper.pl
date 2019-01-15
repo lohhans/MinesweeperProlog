@@ -159,9 +159,9 @@ check(X,Y), mine(X,Y) <=> write('Voce perdeu! Ai tinha uma bomba!'), nl, halt. %
     so the value of N will be 3, which is the number of pumps around this house (X,Y).
 */
 check(X,Y), mine(Xmine,Ymine) ==>
-  Xmine =< X+1, Xmine >= X-1,
-  Ymine =< Y+1, Ymine >= Y-1 |
-  field(X,Y,1).
+    Xmine =< X+1, Xmine >= X-1,
+    Ymine =< Y+1, Ymine >= Y-1 |
+    field(X,Y,1).
 
 field(X,Y,N1), field(X,Y,N2) <=> N is N1+N2 | field(X,Y,N).
 
@@ -196,9 +196,9 @@ check(X,Y) ==> field(X,Y,0).
     each check is performed from the logic of the individual check described above.
 */
 check(X,Y), field(X,Y,0) ==> Xm is X-1, Xp is X+1, Ym is Y-1, Yp is Y+1,
-  check(X,Ym), check(X,Yp),
-  check(Xm,Y), check(Xp,Y),
-  check(Xm,Ym), check(Xm,Yp),
-  check(Xp,Ym), check(Xp,Yp).
+    check(X,Ym), check(X,Yp),
+    check(Xm,Y), check(Xp,Y),
+    check(Xm,Ym), check(Xm,Yp),
+    check(Xp,Ym), check(Xp,Yp).
 
 :- include('play.pl').
