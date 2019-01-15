@@ -155,15 +155,21 @@ prompt :-
 start_prompt_bot :-
 
     print_field, nl,
-    random_between(1,10,X), random_between(1,10,Y),
-    check(X,Y),
+    random_between(1,4,X), random_between(1,4,Y),
     nl, write("("), write(X), write(","), write(Y), write(")"), nl,
-    print_field.
-    
-%     prompt_bot.
+    check(X,Y),
+    print_field, nl,
+
+    random_between(7,10,X1), random_between(7,10,Y1),
+    nl, write("("), write(X1), write(","), write(Y1), write(")"), nl,
+    check(X1,Y1),
+    print_field, halt.
+
+    %prompt_bot.
 
 % prompt_bot :-
 %     print_field, nl,
+%     %manda(X,Y) para checar
 %
 %     print_field, nl,
 %     prompt_bot.
