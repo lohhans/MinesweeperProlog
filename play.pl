@@ -15,7 +15,7 @@
     EN: In info/3 this statement will be used: info(X,Y,Mines)
     where X (line) and Y (column) is the boundary of the array of the minesweeper and N eh the number of pumps
 */
-:- chr_constraint info/3.
+:- chr_constraint info/3, start_prompt_bot/0, prompt_bot/2.
 
 /*
     PT-BR: Menu:
@@ -51,6 +51,13 @@ main :-
 
     get_time(StartTime),
     asserta(start_time(StartTime)),
+
+    write('Digite 0 para jogar o campo minado'), nl,
+    write('Digite 1 para que a maquina jogue o campo minado:  '), read(Escolha_bot),
+
+    Escolha_bot = 1 -> start_prompt_bot;
+
+    nl,
 
     prompt.
 
@@ -144,6 +151,30 @@ prompt :-
     write('  Coluna:   '), read(Y), nl,
     check(X,Y),
     prompt.
+
+start_prompt_bot :-
+
+    print_field, nl,
+    random_between(1,4,X), random_between(1,4,Y),
+    nl, write("("), write(X), write(","), write(Y), write(")"), nl,
+    check(X,Y),
+    print_field, nl,
+
+    random_between(7,10,X1), random_between(7,10,Y1),
+    nl, write("("), write(X1), write(","), write(Y1), write(")"), nl,
+    check(X1,Y1),
+    print_field, halt.
+
+    %prompt_bot.
+
+% prompt_bot :-
+%     print_field, nl,
+%     %manda(X,Y) para checar
+%
+%     print_field, nl,
+%     prompt_bot.
+
+
 
 /*
     PT-BR: Temporizador - Usado para mostrar o tempo que o jogador levou pra chegar a uma solucao final;
